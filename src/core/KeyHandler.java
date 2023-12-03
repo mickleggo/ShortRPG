@@ -1,5 +1,4 @@
 package core;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,7 +16,7 @@ public class KeyHandler implements KeyListener {
 		
 		if(code == KeyEvent.VK_S) {
 			downPressed = true;
-			upPressed = true;
+			upPressed = false;
 		}
 		
 		if(code == KeyEvent.VK_A) {
