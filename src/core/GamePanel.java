@@ -1,13 +1,19 @@
 package core;
-import objects.Player;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
+
+import objects.Player;
 
 
 public class GamePanel extends JPanel implements Runnable {
 
 	//SCREEN SETTINGS
-	final int originalTileSize = 32; //sets tile size to 32x32 tiles, other common sizes 16x16 or 64x64
+	public final int originalTileSize = 32; //sets tile size to 32x32 tiles, other common sizes 16x16 or 64x64
 	final int scale = 2;
 	
 	public final int tileSize = originalTileSize * scale; //64x64 tile

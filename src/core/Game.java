@@ -8,7 +8,6 @@ public class Game {
 	private static String title = "Short RPG Adventure";
 	
 	
-	
 	public static void main(String[] args) {
 
 		JFrame window = new JFrame();
