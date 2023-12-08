@@ -1,5 +1,4 @@
 package objects;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,20 +13,26 @@ public class Player extends Entity {
 
 	GamePanel gp;
 	KeyHandler keyH;
+	public final int screenX, screenY;
+	public final int animationSpeed = 12;
 
 	private BufferedImage dn1, dn2, dn3, dn4;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
 		this.keyH = keyH;
+		
+		screenX = gp.screenWidth/2 - (gp.tileSize/2);
+		screenY = gp.screenHeight/2 - (gp.tileSize/2);
+		
 		setDefaultValues();
 		getPlayerImage();
 	}
 	
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
-		speed = 4;
+		worldX = 100;
+		worldY = 100;
+		speed = 5;
 		direction = "down";
 	}
 	
@@ -47,24 +52,24 @@ public class Player extends Entity {
 		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
 			if(keyH.upPressed == true) { 
 				direction = "down";
-				y -= speed;  
+				worldY -= speed;  
 			}
 			if(keyH.downPressed == true) { 
 				direction = "down";
-				y += speed; 
+				worldY += speed; 
 			}
 			if(keyH.leftPressed == true) { 
 				direction = "down";
-				x -= speed; 
+				worldX -= speed; 
 			}
 			if(keyH.rightPressed == true) { 
 				direction = "down";
-				x += speed; 
+				worldX += speed; 
 			}
 			
 			spriteCounter++;		
 			
-			if(spriteCounter > 15) {
+			if(spriteCounter > animationSpeed) {
 				if(spriteNum == 1) spriteNum = 2;
 				else if (spriteNum == 2) spriteNum = 3;
 				else if (spriteNum == 3) spriteNum = 4;
@@ -97,16 +102,8 @@ public class Player extends Entity {
 			break;
 		}
 		
-		g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2d.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
-	}
-	
-	public void setX(int x) {
-		this.x = x;
-	}
-	
-	public void setY(int y) {
-		this.y = y;
 	}
 	
 }

@@ -1,13 +1,11 @@
 package framework;
-
+import core.GamePanel;
+import objects.Player;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-import core.GamePanel;
-import objects.Player;
 
 public class TileManager {
 	
@@ -15,7 +13,7 @@ public class TileManager {
 	Player player;
 	Tiles[] tile;
 	final int tileTypes = 6;
-	int mapTileNum[][], width, height;
+	int mapTileNum[][];
 
 	public TileManager(GamePanel gp, Player player) {
 		this.gp = gp;
@@ -60,16 +58,15 @@ public class TileManager {
 			e.printStackTrace();
 		}
 		
-		int w = image.getWidth();
-		int h = image.getHeight();
+		gp.maxWorldCol = image.getWidth();
+		gp.worldWidth = gp.maxWorldCol*gp.tileSize;
+		gp.maxWorldRow = image.getHeight();
+		gp.worldHeight = gp.maxWorldRow*gp.tileSize;
 		
-		this.width = w;
-		this.height = h;
+		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 		
-		mapTileNum = new int[w][h];
-		
-		for(int xx = 0; xx < w; xx++) {
-			for (int yy = 0; yy < h; yy++) {
+		for(int xx = 0; xx < gp.maxWorldCol; xx++) {
+			for (int yy = 0; yy < gp.maxWorldRow; yy++) {
 				int pixel = image.getRGB(xx, yy);
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
@@ -91,11 +88,21 @@ public class TileManager {
 		
 	}
 	
-	public void draw(Graphics2D g2d) {
-		for(int xx = 0; xx < width; xx++) {
-			for(int yy = 0; yy < height; yy++) {
-				int tileNum = mapTileNum[xx][yy];
-				g2d.drawImage(tile[tileNum].image, (xx*gp.tileSize)-gp.tileSize, (yy*gp.tileSize)-gp.tileSize, gp.tileSize, gp.tileSize, null);
+	public void draw(Graphics2D g2d) {		
+		for(int worldCol = 0; worldCol < gp.maxWorldCol; worldCol++) {
+			for(int worldRow = 0; worldRow < gp.maxWorldRow; worldRow++) {
+				int worldX = worldCol*gp.tileSize;
+				int worldY = worldRow*gp.tileSize;
+				if (	worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+						worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
+						worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+						worldY - gp.tileSize < gp.player.worldY + gp.player.screenY   ) {
+					
+					int tileNum = mapTileNum[worldCol][worldRow];
+					int screenX = worldX - gp.player.worldX + gp.player.screenX;
+					int screenY = worldY - gp.player.worldY + gp.player.screenY;
+					g2d.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+				}
 			}
 		}
 	}

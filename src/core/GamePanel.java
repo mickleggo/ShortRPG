@@ -1,17 +1,17 @@
 package core;
+import framework.TileManager;
+import objects.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
-
-import framework.TileManager;
-import objects.Player;
 
 
 public class GamePanel extends JPanel implements Runnable {
 
+	private static final long serialVersionUID = 20231208L;
+	
 	//SCREEN SETTINGS
 	public final int originalTileSize = 32; //sets tile size to 32x32 tiles, other common sizes 16x16 or 64x64
 	final int scale = 2;
@@ -22,12 +22,18 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int screenWidth = tileSize * maxScreenCol;	//1280
 	public final int screenHeight = tileSize * maxScreenRow;	//960
 	
+	//WORLD SETTINGS
+	public int maxWorldCol;
+	public int maxWorldRow;
+	public int worldWidth;
+	public int worldHeight;
+	
 	//GAME SETTINGS
 	int FPS = 60;
 	
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
-	Player player = new Player(this, keyH);
+	public Player player = new Player(this, keyH);
 	TileManager tileM = new TileManager(this, player);
 	
 	public GamePanel() {
