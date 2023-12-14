@@ -1,6 +1,8 @@
 package core;
 import framework.TileManager;
 import objects.Player;
+import objects.SuperObject;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -33,7 +35,9 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
+	public CollisionChecker cChecker = new CollisionChecker(this);
 	public Player player = new Player(this, keyH);
+	public SuperObject obj[] = new SuperObject[10];
 	TileManager tileM = new TileManager(this, player);
 	
 	public GamePanel() {

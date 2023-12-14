@@ -1,5 +1,6 @@
 package objects;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -24,6 +25,11 @@ public class Player extends Entity {
 		
 		screenX = gp.screenWidth/2 - (gp.tileSize/2);
 		screenY = gp.screenHeight/2 - (gp.tileSize/2);
+		collisionArea = new Rectangle();
+		collisionArea.x = 12;
+		collisionArea.y = 18;
+		collisionArea.width = 48;
+		collisionArea.height = 52;
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -51,20 +57,39 @@ public class Player extends Entity {
 	public void update() {		//currently all directions set to down as I have not bad other sprites yet	
 		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true) {
 			if(keyH.upPressed == true) { 
-				direction = "down";
-				worldY -= speed;  
+				direction = "up"; 
 			}
 			if(keyH.downPressed == true) { 
 				direction = "down";
-				worldY += speed; 
 			}
 			if(keyH.leftPressed == true) { 
-				direction = "down";
-				worldX -= speed; 
+				direction = "left";
 			}
 			if(keyH.rightPressed == true) { 
-				direction = "down";
-				worldX += speed; 
+				direction = "right"; 
+			}
+			
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			if(collisionOn == false) {
+				switch(direction) {
+				case "up":
+					worldY -= speed; 
+					break;
+					
+				case "down":
+					worldY += speed; 
+					break;
+					
+				case "left":
+					worldX -= speed; 
+					break;
+					
+				case "right":
+					worldX += speed;
+					break;
+				}
 			}
 			
 			spriteCounter++;		
@@ -86,7 +111,10 @@ public class Player extends Entity {
 		
 		switch(direction) {
 		case "up":
-			image = dn1;
+			if (spriteNum == 1) image = dn1;
+			if (spriteNum == 2) image = dn2;
+			if (spriteNum == 3) image = dn3;
+			if (spriteNum == 4) image = dn4;
 			break;
 		case "down":
 			if (spriteNum == 1) image = dn1;
@@ -95,10 +123,16 @@ public class Player extends Entity {
 			if (spriteNum == 4) image = dn4;
 			break;
 		case "left":
-			image = dn1;
+			if (spriteNum == 1) image = dn1;
+			if (spriteNum == 2) image = dn2;
+			if (spriteNum == 3) image = dn3;
+			if (spriteNum == 4) image = dn4;
 			break;
 		case "right":
-			image = dn1;
+			if (spriteNum == 1) image = dn1;
+			if (spriteNum == 2) image = dn2;
+			if (spriteNum == 3) image = dn3;
+			if (spriteNum == 4) image = dn4;
 			break;
 		}
 		

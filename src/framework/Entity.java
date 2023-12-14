@@ -1,5 +1,6 @@
 package framework;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -8,6 +9,8 @@ public class Entity {
 	public int speed;
 	public BufferedImage image;
 	public String direction;
+	public Rectangle collisionArea;
+	public boolean collisionOn = false;
 
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
