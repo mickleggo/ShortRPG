@@ -24,6 +24,7 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		
+		gamePanel.setup();
 		gamePanel.initiate();
 		
 	}

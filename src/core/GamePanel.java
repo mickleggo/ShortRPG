@@ -1,13 +1,15 @@
 package core;
-import framework.TileManager;
-import objects.Player;
-import objects.SuperObject;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
+
+import framework.ObjectManager;
+import framework.TileManager;
+import objects.Player;
+import objects.SuperObject;
 
 
 public class GamePanel extends JPanel implements Runnable {
@@ -36,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 	KeyHandler keyH = new KeyHandler();
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
+	public ObjectManager oManager = new ObjectManager(this);
 	public Player player = new Player(this, keyH);
 	public SuperObject obj[] = new SuperObject[10];
 	TileManager tileM = new TileManager(this, player);
@@ -54,6 +57,10 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread = new Thread(this);
 		gameThread.start();
 		
+	}
+	
+	public void setup() {
+		oManager.setObject();
 	}
 	
 	public void run() {
@@ -86,7 +93,12 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		Graphics2D g2d = (Graphics2D)g;
 		
-		tileM.draw(g2d);		
+		tileM.draw(g2d);	
+		
+		for(int i = 0; i < obj.length; i++) {
+			if(obj[i] != null) obj[i].draw(g2d, this);
+		}
+		
 		player.draw(g2d);
 		
 		g2d.dispose();
